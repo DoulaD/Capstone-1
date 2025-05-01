@@ -2,15 +2,15 @@ package com.pluralsight.financetracker;
 
 import java.time.LocalDateTime;
 
-public class Transaction {
+public class Ledger {
     LocalDateTime purchase;
-    String notes;
+    String description;
     String vendor;
     Double amount;
 
-    public Transaction(LocalDateTime purchase, String notes, String vendor, Double amount) {
+    public Ledger(LocalDateTime purchase, String description, String vendor, Double amount) {
         this.purchase = purchase;
-        this.notes = notes;
+        this.description = description;
         this.vendor = vendor;
         this.amount = amount;
     }
@@ -23,12 +23,12 @@ public class Transaction {
         this.purchase = purchase;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getDescription() {
+        return description;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getVendor() {
@@ -45,5 +45,18 @@ public class Transaction {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+
+    }
+
+    @Override
+    public String toString() {
+        return "Ledger{" +
+                "purchase=" + purchase +
+                ", description='" + description + '\'' +
+                ", vendor='" + vendor + '\'' +
+                ", amount=" + amount +
+                '}';
+
+
     }
 }
