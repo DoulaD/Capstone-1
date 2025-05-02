@@ -127,7 +127,11 @@ public class FinanceTracker {
         System.out.println("Choose an option: ");
         String option = scanner.nextLine().trim().toUpperCase();
 
+        if (option.equals("R")) {
+            runReportsMenu();
+            return;
 
+        }
         try {
             File file = new File("/Users/doul/Pluralsight/capstone-1/Capstone-1/AccountingLedger/src/data/Transactions.csv");
             if (!file.exists()) {
@@ -162,10 +166,9 @@ public class FinanceTracker {
                 };
 
 
-                    System.out.printf("%s %s | %-20s | %-15s | %10.2f\n", date, time, description, vendor, amount);
+                System.out.printf("%s %s | %-20s | %-15s | %10.2f\n", date, time, description, vendor, amount);
 
-                }
-
+            }
 
 
             bufferedReader.close();
@@ -179,32 +182,88 @@ public class FinanceTracker {
         promptReturnToMenu();
     }
 
-        private static void promptReturnToMenu () {
-            System.out.println("\nPress Enter to return to the main menu...");
-            scanner.nextLine();
-        }
+    private static void promptReturnToMenu() {
+        System.out.println("\nPress Enter to return to the main menu...");
+        scanner.nextLine();
+    }
 
     private static void exit() {
     }
-}
 
+    private static void runReportsMenu() {
+        boolean inReportsMenu = true;
 
-class TransactionFileHandler {
-    public static final String FILE_PATH = "/Users/doul/Pluralsight/capstone-1/Capstone-1/AccountingLedger/src/data/Transactions.csv";
+        while (inReportsMenu) {
+            System.out.println("/\n======Reports Menu=======");
+            System.out.println("1) Month to Date");
+            System.out.println("2) Previous Month");
+            System.out.println("3) Year To Date");
+            System.out.println("4) Previous Year");
+            System.out.println("5) Search by Vendor");
+            System.out.println("0) Back ");
+            System.out.println("H) Home ");
 
+            String input = scanner.nextLine().trim().toUpperCase();
 
-    public static void saveTransaction(String entry) {
-        try (FileWriter writer = new FileWriter(FILE_PATH, true)) {
-            writer.write(entry + "\n");
-        } catch (IOException e) {
-            System.out.println("Error saving transaction: " + e.getMessage());
+            switch (input) {
+                case "1":
+                    filterByMonthToDate();
+                    break;
+                case "2":
+                    filterByPreviousMonth();
+                    break;
+                case "3":
+                    filterByYearToDate();
+                    break;
+                case "4":
+                    filterByPreviousYear();
+                    break;
+                case "5":
+                    filterByVendor();
+                    break;
+                case "0":
+                    inReportsMenu = false;
+                    break;
+                case "H":
+                    return;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
         }
 
-
     }
+
+    private static void filterByMonthToDate() {
+LocalDateTime now =
+    }
+
+    private static void filterByPreviousMonth() {
+    }
+
+    private static void filterByYearToDate() {
+    }
+
+    private static void filterByPreviousYear() {
+    }
+
+    private static void filterByVendor() {
+    }
+
+
+    static class TransactionFileHandler {
+        public static final String FILE_PATH = "/Users/doul/Pluralsight/capstone-1/Capstone-1/AccountingLedger/src/data/Transactions.csv";
+
+
+        public static void saveTransaction(String entry) {
+            try (FileWriter writer = new FileWriter(FILE_PATH, true)) {
+                writer.write(entry + "\n");
+            } catch (IOException e) {
+                System.out.println("Error saving transaction: " + e.getMessage());
+            }
+
+
+        }
+    }
+
+
 }
-
-
-
-
-
