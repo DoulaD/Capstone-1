@@ -112,7 +112,9 @@ public class FinanceTracker {
 
 
         TransactionFileHandler.saveTransaction(entry);
-        System.out.println("Payment recorded and saved!");
+        System.out.println("***** Payment recorded and saved! *******");
+
+        promptReturnToMenu();
 
 
     }
@@ -165,8 +167,8 @@ public class FinanceTracker {
                     default -> false;
                 };
 
-
-                System.out.printf("%s %s | %-20s | %-15s | %10.2f\n", date, time, description, vendor, amount);
+                if (show)
+                    System.out.printf("%s %s | %-20s | %-15s | %10.2f\n", date, time, description, vendor, amount);
 
             }
 
@@ -234,19 +236,167 @@ public class FinanceTracker {
     }
 
     private static void filterByMonthToDate() {
-LocalDateTime now =
+        LocalDateTime now = LocalDateTime.now();
+        String currentMonth = String.format("%d-%02d", now.getYear(), now.getMonthValue());
+        File file = new File(TransactionFileHandler.FILE_PATH);
+        if (!file.exists()) {
+            System.out.println("No transaction found.");
+            return;
+        }
+        System.out.println("\n=====> Month To Date Transactions <======");
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("/Users/doul/Pluralsight/capstone-1/Capstone-1/AccountingLedger/src/data/Transactions.csv"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length != 5) continue;
+
+                String date = parts[0];
+                if (date.startsWith(currentMonth)) {
+                    System.out.printf("%s %s | %-20s | %-15s | %10s\n", parts[0], parts[1], parts[2], parts[3], parts[4]);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading transaction: " + e.getMessage());
+        }
+        promptReturnToMenu();
+
     }
 
     private static void filterByPreviousMonth() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime previousMonthDate = now.minusMonths(1);
+        String previousMonth = String.format("%d-%02d", previousMonthDate.getYear(), previousMonthDate.getMonthValue());
+
+        File file = new File(TransactionFileHandler.FILE_PATH);
+        if (!file.exists()) {
+            System.out.println("No Transactions found.");
+            return;
+        }
+
+        System.out.println("\n===> Previous Month Transactions <===");
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("/Users/doul/Pluralsight/capstone-1/Capstone-1/AccountingLedger/src/data/Transactions.csv"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length != 5) continue;
+
+                String date = parts[0]; // Format: yyyy-MM-dd
+                if (date.startsWith(previousMonth)) {
+                    System.out.printf("%s %s | %-20s | %-15s | %10s\n",
+                            parts[0], parts[1], parts[2], parts[3], parts[4]);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading transactions: " + e.getMessage());
+        }
+        promptReturnToMenu();
+
     }
+
 
     private static void filterByYearToDate() {
+
+        int currentYear = LocalDateTime.now().getYear();
+
+        File file = new File(TransactionFileHandler.FILE_PATH);
+        if (!file.exists()) {
+            System.out.println("No Transactions found.");
+            return;
+        }
+
+        System.out.println("\n===> Year To Date Transactions <===");
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("/Users/doul/Pluralsight/capstone-1/Capstone-1/AccountingLedger/src/data/Transactions.csv"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length != 5) continue;
+
+                String date = parts[0]; // Format: yyyy-MM-dd
+                if (date.startsWith(String.valueOf(currentYear))) {
+                    System.out.printf("%s %s | %-20s | %-15s | %10s\n",
+                            parts[0], parts[1], parts[2], parts[3], parts[4]);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading transactions: " + e.getMessage());
+        }
+
+        promptReturnToMenu();
     }
+
 
     private static void filterByPreviousYear() {
+        int currentYear = LocalDateTime.now().getYear();
+        int previousYear = currentYear - 1;
+
+        File file = new File(TransactionFileHandler.FILE_PATH);
+        if (!file.exists()) {
+            System.out.println("No Transactions found.");
+            return;
+        }
+
+        System.out.println("\n===> Previous Year Transactions <===");
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("/Users/doul/Pluralsight/capstone-1/Capstone-1/AccountingLedger/src/data/Transactions.csv"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length != 5) continue;
+
+                String date = parts[0]; // Format: yyyy-MM-dd
+                if (date.startsWith(String.valueOf(previousYear))) {
+                    System.out.printf("%s %s | %-20s | %-15s | %10s\n",
+                            parts[0], parts[1], parts[2], parts[3], parts[4]);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading transactions: " + e.getMessage());
+        }
+
+        promptReturnToMenu();
     }
 
+
     private static void filterByVendor() {
+
+        System.out.print("\nEnter vendor name to search: ");
+        String vendorSearch = scanner.nextLine().trim().toLowerCase();
+
+        File file = new File(TransactionFileHandler.FILE_PATH);
+        if (!file.exists()) {
+            System.out.println("No Transactions found.");
+            return;
+        }
+
+        System.out.println("\n=== Transactions for Vendor: " + vendorSearch + " ===");
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("/Users/doul/Pluralsight/capstone-1/Capstone-1/AccountingLedger/src/data/Transactions.csv"))) {
+            String line;
+            boolean found = false;
+
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length != 5) continue;
+
+                String vendor = parts[3].toLowerCase();
+                if (vendor.contains(vendorSearch)) {
+                    System.out.printf("%s %s | %-20s | %-15s | %10s\n",
+                            parts[0], parts[1], parts[2], parts[3], parts[4]);
+                    found = true;
+                }
+            }
+
+            if (!found) {
+                System.out.println("No transactions found for vendor: " + vendorSearch);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading transactions: " + e.getMessage());
+        }
+
+        promptReturnToMenu();
     }
 
 
@@ -260,10 +410,7 @@ LocalDateTime now =
             } catch (IOException e) {
                 System.out.println("Error saving transaction: " + e.getMessage());
             }
-
-
         }
     }
-
 
 }

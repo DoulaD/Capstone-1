@@ -31,7 +31,7 @@ date|time|description|vendor|amount
 2023-04-03|09:03:37|Coffee|Panera|1492.12
 2023-02-20|10:24:23|Maintenance Fee|IT Services Inc|764.50
 2023-12-01|17:54:31|Hardware Purchase|Freelancer|226.59
-2023-06-25|10:42:45|Travel Reimbursement|Panera|1944.90
+2019-06-25|10:42:45|Travel Reimbursement|Panera|1944.90
 2023-03-12|08:57:50|Subscription Renewal|Salesforce|1027.26
 2023-11-20|14:16:30|Subscription Renewal|Adobe|924.48
 2023-01-02|11:38:43|Hardware Purchase|Freelancer|1556.34
@@ -67,13 +67,11 @@ date|time|description|vendor|amount
 2023-09-11|12:16:08|Office Supplies|Salesforce|1314.11
 2023-04-12|17:34:35|Software License|Dell|1013.55
 2023-11-07|13:31:33|Coffee|Freelancer|402.16
-2023-03-13|10:28:02|Office Supplies|Salesforce|1569.21
+2021-03-13|10:28:02|Office Supplies|Salesforce|1569.21
 2023-01-14|14:17:12|Lunch Meeting|Amazon|506.79
 2023-11-10|10:30:10|Maintenance Fee|Adobe|1873.87
-2023-03-22|15:59:00|Lunch Meeting|Salesforce|607.98
+2022-03-22|15:59:00|Lunch Meeting|Salesforce|607.98
 2023-10-31|15:32:27|Travel Reimbursement|Adobe|1031.83
 2023-09-27|09:24:44|Maintenance Fee|Freelancer|1585.53
 2023-03-02|17:30:52|Subscription Renewal|IT Services Inc|1569.78
 
-2025-05-01|17:50:46|asdfad|adasdasd|1234.00
-2025-05-01|17:52:14|adasd|sdcsf|-1234.00
